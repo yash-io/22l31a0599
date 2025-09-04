@@ -4,14 +4,15 @@ import './shorten.css';
 const Shortener = () => {
     const [url, setUrl] = useState("");
     const [shortcode, setShortcode] = useState("");
-    const [shortenedUrl, setShortenedUrl] = useState("");   
-    const [validityPeriod, setValidityPeriod] = useState("");
+    const [shortenedUrl, setShortenedUrl] = useState("");
+    const [isshortened, setIsShortened] = useState(false); 
+    const [validityPeriod, setValidityPeriod] = useState(30);
 
 
     const shortenUrl = async () => {
 
         try{
-            const response = await fetch('http://localhost:5000/shorten', {
+            const response = await fetch('http://localhost:5000/shortUrl', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -21,8 +22,10 @@ const Shortener = () => {
 
             const data = await response.json();
             setShortenedUrl(data.shortenedUrl);
+            setIsShortened(true);
         } catch (error) {
-            console.error("Error in shortening the URL:", error);
+            console.error("Error in shortening the URL:", error.message);
+            window.alert("Error in shortening the URL. Please try again using another short code.");
         }
     }
 
@@ -61,6 +64,13 @@ const Shortener = () => {
             <button onClick={shortenUrl}>
                 Shorten
             </button>
+            <div className='result'>
+                {isshortened && <div>
+                    <p>Shortened URL: {shortenedUrl}</p>
+                    <p>Validity Period: {validityPeriod} hours</p>
+                    </div>}
+                
+            </div>
         </div>
         </>
     );

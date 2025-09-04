@@ -1,7 +1,8 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import router from './routes/router.js';
+import cors from 'cors';
+import connectDB from './db.js';
 
 dotenv.config();
 
@@ -14,6 +15,13 @@ app.use(cors({origin:"*"})) //made this as an public api
 app.use('/', router);
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port http://localhost:${PORT}`);
+app.listen(PORT, async () => {
+    try{
+        await connectDB();
+        console.log(`Server is running on port http://localhost:${PORT}`);
+
+    }
+    catch(error){
+        console.error("Error starting server:", error);
+    }
 }); 
