@@ -1,16 +1,20 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Shortener from './components/Shortener'
 
-function App() {
-  const [count, setCount] = useState(0)
+//creating a url shortenner app
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+
+const App = () => {
 
   return (
-    <>
-      
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Shortener />} />
+      </Routes>
+    </Router>
   )
+
 }
 
 export default App
